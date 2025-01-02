@@ -362,6 +362,13 @@
         function showdata_html() {
             // Automatically trigger the download at the end
             autoDownloadData();
+                        // Display a thank-you message
+            document.body.innerHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: white;">
+                    <p style="font-size:18px; text-align:center; color:green;">
+                        Thank you for completing the task. You can now close this window and continue with the survey.
+                    </p>
+                </div>`;
         }
         var afterwords = 1, instruction = 2, arial = 1, psy_startbutton_text = "Click to start", psy_loading_text = "Loading data ...", general_trial_counter = 0, task_fitts = {
             step: 1, task_trial_selection: 0, current_trial: -1, taskname: "task_fitts", tasknumber: 1, start: function (a) { task_fitts.step = 1; psy_clear_stimulus_counters_db(); psy_stop_freqs(); task_fitts.run() }, x: 0, y: 0, w: 0, distance: 0, fittslaw: 0, run: function () {
@@ -378,7 +385,7 @@
                 switch (block_test.step) {
                     case 1: block_test.step++; psy_wait(instruction, 32); break; case 2: block_test.step++; psy_clear_screen_db(); block_test.run(); break; case 3: block_test.step++; psy_clear_screen_db(); block_test.max_trials_in_block = 999999; block_test.criteria_fullfilled = 1; 0 < block_test.criteria_fullfilled && block_test.trial_counter <= block_test.max_trials_in_block ? (block_test.trial_counter++, this.current_trial = this.trials.shift(), task_fitts.start(this.current_trial)) : setTimeout("block_test.run()", 0); break;
                     case 4: block_test.step++; block_test.trial_counter_per_task--; 0 < error_status && 0 < this.trials.length && this.roe[0] && (this.trials.unshift(this.current_trial), this.trials.pop()); if (0 == block_test.trials.length || block_test.trial_counter >= block_test.max_trials_in_block || 1 == tasklist_end_request || 1 == experiment_end_request) tasklist_end_request = block_test.criteria_fullfilled = 0; 1 == block_test.criteria_fullfilled && (block_test.step -= 2); setTimeout("block_test.run()", 0); break; case 5: block_test.step++; psy_clear_screen_db();
-                        psy_add_text_rgb_db(1, 400, 150, PSY_CENTRAL, PSY_CENTRAL, 255, 255, 255, "Press space bar to continue", 0); psy_draw_all_db(); datalines = outputdata.split("\n"); var a = 0, b = [], c = []; for (tmpx = 0; tmpx < datalines.length - 1; tmpx++)datalinenumbers = datalines[tmpx].split(/ +/), 1 == parseInt(datalinenumbers[6]) && (b[a] = parseInt(datalinenumbers[4]), c[a] = parseInt(datalinenumbers[5]), a++); psy_xyplot(100, 100, 600, 450, 1, 1, b, c, "", ""); psy_wait(0, 32); break; case 6: block_test.step++; psy_clear_screen_db(); psy_wait(afterwords, 32); break;
+                        psy_add_text_rgb_db(1, 400, 150, PSY_CENTRAL, PSY_CENTRAL, 255, 255, 255, "Press space bar to continue", 0); psy_draw_all_db(); datalines = outputdata.split("\n"); var a = 0, b = [], c = []; for (tmpx = 0; tmpx < datalines.length - 1; tmpx++)datalinenumbers = datalines[tmpx].split(/ +/), 1 == parseInt(datalinenumbers[6]) && (b[a] = parseInt(datalinenumbers[4]), c[a] = parseInt(datalinenumbers[5]), a++); psy_xyplot(100, 100, 600, 450, 1, 1, b, c, "", ""); psy_wait(0, 32); break; case 6: showdata_html(); break;
                     case 7: block_test.step++; psy_clear_screen_db(); block_test.run(); break; case 8: block_test.step++, setTimeout("blocks" + psy_blockorder + ".run()", 0)
                 }
             }
